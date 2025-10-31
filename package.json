@@ -1,11 +1,4 @@
 {
   "name": "myu-api",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "node api/test.js",
-    "deploy": "vercel --prod"
-  },
-  "dependencies": {}
+  "private": true
 }
