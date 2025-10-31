@@ -1,5 +1,3 @@
-// /api/test
-
 function setCors(res) {
   res.setHeader('Access-Control-Allow-Origin', '*'); // 或者指定域名
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
