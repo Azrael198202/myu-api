@@ -1,4 +1,7 @@
 {
   "name": "myu-api",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "resend": "^6.4.0"
+  }
 }
