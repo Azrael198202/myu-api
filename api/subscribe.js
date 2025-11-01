@@ -14,7 +14,7 @@ export default async function handler(req, res) {
     // 向你的邮箱发送通知
     await resend.emails.send({
       from: 'no-reply@myu-api.vercel.app',
-      to: process.env.TO_EMAIL,
+      to: email,
       subject: '新的订阅请求',
       html: `<p>新的订阅邮箱: <strong>${email}</strong></p>`,
     });
