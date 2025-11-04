@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 // 数据在 api/_utils/_data 下
-const DATA_DIR = path.join(__dirname, '_data');
+const DATA_DIR = path.join(__dirname, 'data');
 const CSV_PATH = path.join(DATA_DIR, 'content.csv');
 
 // 简易 CSV 解析（支持引号/逗号/换行）
