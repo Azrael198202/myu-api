@@ -1,4 +1,4 @@
 id,type,date,title,summary,thumbnail,tags,slug,contentPath
-evt-20251102,EVENT,2025-11-02,トラりんによるグリーティングを開催【龍谷ミュージアム】,#仏教SDGs｜秋季特別展「仏教と夢」を盛り上げるため、京都国立博物館PR大使「トラりん」が皆さまをお出迎えします。,https://example.com/images/torarin.jpg,"仏教SDGs|イベント|龍谷ミュージアム",torarin-greeting-2025-11-09,data/articles/2025-11-02-torarin.md
-news-20251020,NEWS,2025-10-20,マイクロMyu公式サイトをリニューアル,ブランドストーリーとAI事例を追加しました。,https://example.com/images/site-renewal.jpg,"お知らせ|リリース",site-renewal-2025-10-20,
-news-20250915,NEWS,2025-09-15,AI旅行コンシェルジュβ提供開始,福岡近郊の観光施設を中心にRAGナレッジを拡充。,https://example.com/images/concierge.jpg,"AI|旅行|β版",ai-concierge-beta-2025-09-15,
+evt-20251102,EVENT,2025-11-02,トラりんによるグリーティングを開催【龍谷ミュージアム】,#仏教SDGs｜秋季特別展「仏教と夢」を盛り上げるため、京都国立博物館PR大使「トラりん」が皆さまをお出迎えします。,/images/profile_title_eng.png,"仏教SDGs|イベント|龍谷ミュージアム",torarin-greeting-2025-11-09,data/articles/2025-11-02-torarin.md
+news-20251020,NEWS,2025-10-20,マイクロMyu公式サイトをリニューアル,ブランドストーリーとAI事例を追加しました。,/images/site-renewal.jpg,"お知らせ|リリース",site-renewal-2025-10-20,
+news-20250915,NEWS,2025-09-15,AI旅行コンシェルジュβ提供開始,福岡近郊の観光施設を中心にRAGナレッジを拡充。,/images/concierge.jpg,"AI|旅行|β版",ai-concierge-beta-2025-09-15,
