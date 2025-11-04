@@ -1,18 +1,22 @@
 // api/_utils/csv.js
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-const ROOT = process.cwd();
-const DATA_DIR = path.join(ROOT, 'data');
+// __dirname for ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname  = path.dirname(__filename);
+
+// 数据目录放在 api/_utils/_data
+const DATA_DIR = path.join(__dirname, '_data');
 const CSV_PATH = path.join(DATA_DIR, 'content.csv');
 
-// 简易 CSV 解析（支持引号、逗号、换行）
+// 简易 CSV 解析（支持引号/逗号/换行）
 function parseCSV(text) {
   const rows = [];
   let i = 0, field = '', row = [], inQuotes = false;
   const pushField = () => { row.push(field); field = ''; };
   const pushRow = () => { rows.push(row); row = []; };
-
   while (i < text.length) {
     const c = text[i];
     if (inQuotes) {
@@ -51,7 +55,6 @@ export function loadAllItems() {
     tags: (it.tags || '').split('|').filter(Boolean),
     date: it.date || '1970-01-01'
   }));
-  // 日期倒序
   return list.sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
@@ -69,9 +72,11 @@ export function getById(id) {
   if (!found) return null;
 
   if (found.contentPath) {
+    // 文章路径相对 _data
     const p = path.isAbsolute(found.contentPath)
       ? found.contentPath
-      : path.join(ROOT, found.contentPath);
+      : path.join(DATA_DIR, path.normalize(found.contentPath.replace(/^data\//, ''))); 
+      // 如果你的 CSV 里写的是 data/articles/xxx.md，这里兼容去掉开头的 data/
     if (fs.existsSync(p)) {
       const md = fs.readFileSync(p, 'utf8');
       return { ...found, content: md };
