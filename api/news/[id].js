@@ -1,10 +1,8 @@
-// api/news/[id].js
-import { setCors } from '../_utils/cors.js';
-import { getById } from '../_utils/csv.js';
+const { setCors } = require('../_utils/cors.js');
+const { getById } = require('../_utils/csv.js');
 
-export default function handler(req, res) {
+module.exports = (req, res) => {
   setCors(req, res, 'GET, OPTIONS');
-
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'GET') {
     res.setHeader('Allow', ['GET', 'OPTIONS']);
@@ -12,7 +10,7 @@ export default function handler(req, res) {
   }
 
   try {
-    const { id } = req.query; // Vercel 会注入 id
+    const { id } = req.query; // Vercel 注入
     const item = getById(id);
     if (!item || item.type !== 'NEWS') return res.status(404).json({ error: 'Not Found' });
     res.status(200).json(item);
@@ -20,4 +18,4 @@ export default function handler(req, res) {
     console.error(e);
     res.status(500).json({ error: 'Detail fetch failed' });
   }
-}
+};

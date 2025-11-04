@@ -1,10 +1,8 @@
-// api/events/index.js
-import { setCors } from '../_utils/cors.js';
-import { listByType } from '../_utils/csv.js';
+const { setCors } = require('../_utils/cors.js');
+const { listByType } = require('../_utils/csv.js');
 
-export default function handler(req, res) {
+module.exports = (req, res) => {
   setCors(req, res, 'GET, OPTIONS');
-
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'GET') {
     res.setHeader('Allow', ['GET', 'OPTIONS']);
@@ -15,7 +13,6 @@ export default function handler(req, res) {
     const page = Math.max(1, parseInt(req.query.page || '1', 10));
     const pageSize = Math.min(50, Math.max(1, parseInt(req.query.pageSize || '12', 10)));
     const data = listByType('EVENT', { page, pageSize });
-
     res.status(200).json({
       ...data,
       items: data.items.map(it => ({
@@ -32,4 +29,4 @@ export default function handler(req, res) {
     console.error(e);
     res.status(500).json({ error: 'List fetch failed' });
   }
-}
+};

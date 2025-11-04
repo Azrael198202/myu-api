@@ -1,10 +1,8 @@
-// api/events/[id].js
-import { setCors } from '../_utils/cors.js';
-import { getById } from '../_utils/csv.js';
+const { setCors } = require('../_utils/cors.js');
+const { getById } = require('../_utils/csv.js');
 
-export default function handler(req, res) {
+module.exports = (req, res) => {
   setCors(req, res, 'GET, OPTIONS');
-
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'GET') {
     res.setHeader('Allow', ['GET', 'OPTIONS']);
@@ -20,4 +18,4 @@ export default function handler(req, res) {
     console.error(e);
     res.status(500).json({ error: 'Detail fetch failed' });
   }
-}
+};

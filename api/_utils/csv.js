@@ -1,13 +1,8 @@
-// api/_utils/csv.js
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+// api/_utils/csv.js (CommonJS)
+const fs = require('fs');
+const path = require('path');
 
-// __dirname for ESM
-const __filename = fileURLToPath(import.meta.url);
-const __dirname  = path.dirname(__filename);
-
-// 数据目录放在 api/_utils/_data
+// 数据在 api/_utils/_data 下
 const DATA_DIR = path.join(__dirname, '_data');
 const CSV_PATH = path.join(DATA_DIR, 'content.csv');
 
@@ -17,6 +12,7 @@ function parseCSV(text) {
   let i = 0, field = '', row = [], inQuotes = false;
   const pushField = () => { row.push(field); field = ''; };
   const pushRow = () => { rows.push(row); row = []; };
+
   while (i < text.length) {
     const c = text[i];
     if (inQuotes) {
@@ -47,7 +43,7 @@ function toObjects(rows) {
   });
 }
 
-export function loadAllItems() {
+function loadAllItems() {
   const raw = fs.readFileSync(CSV_PATH, 'utf8');
   const rows = parseCSV(raw);
   const list = toObjects(rows).map(it => ({
@@ -58,7 +54,7 @@ export function loadAllItems() {
   return list.sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
-export function listByType(type, { page = 1, pageSize = 12 } = {}) {
+function listByType(type, { page = 1, pageSize = 12 } = {}) {
   const all = loadAllItems().filter(x => x.type === type);
   const total = all.length;
   const start = (page - 1) * pageSize;
@@ -66,17 +62,15 @@ export function listByType(type, { page = 1, pageSize = 12 } = {}) {
   return { total, page, pageSize, items };
 }
 
-export function getById(id) {
+function getById(id) {
   const all = loadAllItems();
   const found = all.find(x => x.id === id);
   if (!found) return null;
 
   if (found.contentPath) {
-    // 文章路径相对 _data
-    const p = path.isAbsolute(found.contentPath)
-      ? found.contentPath
-      : path.join(DATA_DIR, path.normalize(found.contentPath.replace(/^data\//, ''))); 
-      // 如果你的 CSV 里写的是 data/articles/xxx.md，这里兼容去掉开头的 data/
+    // 文章路径相对 _data；兼容 CSV 里写的 data/articles/xxx.md
+    const relative = found.contentPath.replace(/^data\//, '');
+    const p = path.join(DATA_DIR, relative);
     if (fs.existsSync(p)) {
       const md = fs.readFileSync(p, 'utf8');
       return { ...found, content: md };
@@ -84,3 +78,9 @@ export function getById(id) {
   }
   return found;
 }
+
+module.exports = {
+  loadAllItems,
+  listByType,
+  getById,
+};
